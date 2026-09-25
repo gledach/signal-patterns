@@ -19,6 +19,7 @@ a market and exposes the result over MCP.
 | **[What is watchable →](./sources.md)** | A catalogue of public sources ranked by lead time, cost and precision. Certificate logs run 20–30 days ahead; changelog pages change on 73% of monitors within 90 days; news is the last place anything appears. Includes what to refuse. |
 | **[What it costs →](./techniques.md)** | LLM capabilities as of September 2026 and the cost levers ranked by return. The top three are not model choice: batch APIs (flat 50%), prefix caching (reads at 0.1×), and not buying output you discard. |
 | **[Building a watcher →](./building-a-watcher.md)** | The shape, and the decisions that are easy to get wrong — hashId choice, state, cadence, failure behaviour. |
+| **[Being consumable by agents →](./agent-integration.md)** | MCP so an agent can query you, Agent Skills so it knows how to use you, and why permission must not scale with capability. |
 | **[Engineering patterns →](./patterns/)** | Eight decisions, each extracted from a bug that shipped. |
 
 ---
@@ -42,6 +43,12 @@ a dashboard** — a dashboard needs someone to open it, and the thing you want i
 to a question you have not thought to ask yet. That shifts the requirements: structured
 output, stable ids, and the ability to say *"I am not in a position to answer"* rather than
 returning an empty list that reads as "nothing happened".
+
+That half is now settled by two open standards rather than by integrations. **MCP** is how
+an agent queries you; **Agent Skills** is how it learns to use you. The two most-used open
+personal-agent runtimes of 2026 both speak both, and both are local-first — so a tool built
+as a local process with a queryable store fits them with no work, and a tool built as a
+hosted product fits neither. See [agent-integration.md](./agent-integration.md).
 
 ---
 
@@ -74,7 +81,8 @@ for turning a quiet failure into a loud one.
 - **Batch and cache before you optimise anything else.** Flat 50%, then reads at a tenth.
 - **A failed model writes nothing.** A halted run announces itself; a run that writes guesses does not.
 - **Return "I don't know" as data.** Empty and broken look identical to an agent.
-- **Agents read by default.** Every paid or state-changing action opt-in, behind a shared ceiling.
+- **Agents read by default.** Every paid or state-changing action opt-in, behind a shared ceiling — and **permission must not scale with capability**.
+- **A skill is a supply chain.** 341 malicious skills were found among ~13,000 in one 2026 marketplace audit.
 - **Every rule above needs an assertion**, or it is a comment.
 
 ---
